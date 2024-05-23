@@ -2,6 +2,7 @@ import webapp2
 from google.appengine.ext.webapp import template
 import os
 import urllib
+import json
 
 class MainPage(webapp2.RedirectHandler):
     def get(self):
@@ -13,6 +14,7 @@ class MainPage(webapp2.RedirectHandler):
         zipcode = self.request.get("zipCode")
         url = "https://api.postalpincode.in/pincode/" + zipcode
         data = urllib.urlopen(url).read()
+        data = json.loads(data)
         post_office = data[0]['PostOffice'][0]['State']
         name = data[0]['PostOffice'][0]['Name']
         block = data[0]['PostOffice'][0]['Block']
